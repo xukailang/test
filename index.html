@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勇者之路 - 打怪升级游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 职业选择界面 -->
+    <div id="class-selection" class="class-selection">
+        <div class="selection-modal">
+            <h1>🎮 选择你的职业</h1>
+            <p class="selection-subtitle">每个职业都有独特的技能和属性</p>
+
+            <div class="class-options">
+                <div class="class-card" data-class="warrior">
+                    <div class="class-icon">⚔️</div>
+                    <h2>战士</h2>
+                    <p class="class-desc">强大的近战战士，拥有高生命值和防御力</p>
+                    <div class="class-stats">
+                        <p>❤️ 生命: 150</p>
+                        <p>💧 魔法: 50</p>
+                        <p>⚔️ 攻击: 15</p>
+                        <p>🛡️ 防御: 10</p>
+                    </div>
+                    <div class="class-skills">
+                        <p><strong>技能:</strong></p>
+                        <p>• 重击：造成150%伤害</p>
+                        <p>• 铁壁：提升50%防御</p>
+                        <p>• 狂暴：连续攻击3次</p>
+                    </div>
+                    <button class="btn btn-select" onclick="selectClass('warrior')">选择战士</button>
+                </div>
+
+                <div class="class-card" data-class="mage">
+                    <div class="class-icon">🔮</div>
+                    <h2>法师</h2>
+                    <p class="class-desc">精通魔法的施法者，拥有强大的魔法技能</p>
+                    <div class="class-stats">
+                        <p>❤️ 生命: 80</p>
+                        <p>💧 魔法: 150</p>
+                        <p>⚔️ 攻击: 8</p>
+                        <p>🛡️ 防御: 3</p>
+                    </div>
+                    <div class="class-skills">
+                        <p><strong>技能:</strong></p>
+                        <p>• 火球术：造成200%魔法伤害</p>
+                        <p>• 冰冻：降低敌人50%攻击</p>
+                        <p>• 魔法风暴：造成300%伤害</p>
+                    </div>
+                    <button class="btn btn-select" onclick="selectClass('mage')">选择法师</button>
+                </div>
+
+                <div class="class-card" data-class="rogue">
+                    <div class="class-icon">🗡️</div>
+                    <h2>刺客</h2>
+                    <p class="class-desc">敏捷的刺客，擅长暴击和连续攻击</p>
+                    <div class="class-stats">
+                        <p>❤️ 生命: 100</p>
+                        <p>💧 魔法: 80</p>
+                        <p>⚔️ 攻击: 12</p>
+                        <p>🛡️ 防御: 5</p>
+                    </div>
+                    <div class="class-skills">
+                        <p><strong>技能:</strong></p>
+                        <p>• 背刺：造成200%暴击伤害</p>
+                        <p>• 闪避：回避下次攻击</p>
+                        <p>• 致命连击：5次快速攻击</p>
+                    </div>
+                    <button class="btn btn-select" onclick="selectClass('rogue')">选择刺客</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <!-- 游戏标题 -->
+        <header class="game-header">
+            <h1>⚔️ 勇者之路 ⚔️</h1>
+            <p class="subtitle">打怪升级，收集装备，成为最强勇者！</p>
+        </header>
+
+        <!-- 主游戏区域 -->
+        <div class="main-game">
+            <!-- 左侧：角色信息 -->
+            <div class="left-panel">
+                <div class="player-info panel">
+                    <h2>👤 角色信息</h2>
+                    <div class="player-avatar" id="player-avatar">🧙‍♂️</div>
+                    <p><strong>职业:</strong> <span id="player-class">未选择</span></p>
+                    <p><strong>等级:</strong> <span id="player-level">1</span> <span id="skill-points" class="skill-points" style="display:none;">💎 技能点: <span id="skill-points-count">0</span></span></p>
+                    <p><strong>经验:</strong> <span id="player-exp">0</span> / <span id="player-max-exp">100</span></p>
+                    <div class="exp-bar">
+                        <div id="exp-fill" class="exp-fill"></div>
+                    </div>
+                    <p><strong>❤️ 生命:</strong> <span id="player-hp">100</span> / <span id="player-max-hp">100</span></p>
+                    <div class="hp-bar">
+                        <div id="hp-fill" class="hp-fill"></div>
+                    </div>
+                    <p><strong>💧 魔法:</strong> <span id="player-mp">100</span> / <span id="player-max-mp">100</span></p>
+                    <div class="mp-bar">
+                        <div id="mp-fill" class="mp-fill"></div>
+                    </div>
+                    <p><strong>⚔️ 攻击力:</strong> <span id="player-attack">10</span></p>
+                    <p><strong>🛡️ 防御力:</strong> <span id="player-defense">5</span></p>
+                    <p><strong>💰 金币:</strong> <span id="player-gold">0</span></p>
+                </div>
+
+                <!-- 技能面板 -->
+                <div class="skills panel" id="skills-panel" style="display:none;">
+                    <h2>✨ 技能</h2>
+                    <div id="skill-list" class="skill-list">
+                        <!-- 技能动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 装备栏 -->
+                <div class="equipment panel">
+                    <h2>🎒 装备栏</h2>
+                    <div class="equipment-slot">
+                        <p>⚔️ 武器: <span id="weapon-slot">无</span></p>
+                    </div>
+                    <div class="equipment-slot">
+                        <p>🛡️ 防具: <span id="armor-slot">无</span></p>
+                    </div>
+                    <div class="equipment-slot">
+                        <p>👑 头盔: <span id="helmet-slot">无</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间：战斗区域 -->
+            <div class="center-panel">
+                <div class="battle-area panel">
+                    <h2>⚔️ 战斗区域</h2>
+
+                    <!-- 战斗场景容器 -->
+                    <div class="battle-scene">
+                        <!-- 背景层 -->
+                        <div class="battle-background">
+                            <div class="background-layer layer-1"></div>
+                            <div class="background-layer layer-2"></div>
+                            <div class="background-layer layer-3"></div>
+                        </div>
+
+                        <!-- 战斗舞台 -->
+                        <div class="battle-stage">
+                            <!-- 玩家角色 -->
+                            <div class="battle-character player-character" id="player-battle-character">
+                                <div class="character-sprite" id="player-sprite">🧙‍♂️</div>
+                                <div class="character-shadow"></div>
+                            </div>
+
+                            <!-- 怪物角色 -->
+                            <div class="battle-character monster-character" id="monster-battle-character">
+                                <div class="character-sprite" id="monster-sprite">👹</div>
+                                <div class="character-shadow"></div>
+                                <!-- 怪物信息 -->
+                                <div class="monster-info">
+                                    <p class="monster-name" id="monster-name">史莱姆</p>
+                                    <p class="monster-level">Lv.<span id="monster-level">1</span></p>
+                                    <div class="hp-bar monster-hp-bar">
+                                        <div id="monster-hp-fill" class="hp-fill"></div>
+                                        <span class="hp-text"><span id="monster-hp">50</span>/<span id="monster-max-hp">50</span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 特效容器 -->
+                            <div id="effect-container" class="effect-container"></div>
+
+                            <!-- 伤害数字容器 -->
+                            <div id="damage-numbers" class="damage-numbers"></div>
+                        </div>
+                    </div>
+
+                    <div class="battle-actions">
+                        <button id="attack-btn" class="btn btn-attack">⚔️ 普通攻击</button>
+                        <button id="heal-btn" class="btn btn-heal">❤️ 治疗 (50金币)</button>
+                        <button id="flee-btn" class="btn btn-flee">🏃 逃跑</button>
+                    </div>
+
+                    <div id="battle-log" class="battle-log">
+                        <p>🎮 游戏开始！准备好战斗了吗？</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：背包和商店 -->
+            <div class="right-panel">
+                <div class="inventory panel">
+                    <h2>🎒 背包</h2>
+                    <div id="inventory-items" class="inventory-items">
+                        <p class="empty-message">背包是空的</p>
+                    </div>
+                </div>
+
+                <div class="shop panel">
+                    <h2>🏪 商店</h2>
+                    <div class="shop-items" id="shop-items">
+                        <!-- 商店物品动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部：统计信息 -->
+        <footer class="game-footer">
+            <p>💀 击败怪物: <span id="monsters-killed">0</span> | 🏆 获得装备: <span id="items-found">0</span></p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(node:*)",
+      "Bash(cmd.exe /c start.bat)",
+      "Bash(powershell \"Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 15 ProcessName, @{Name=''Memory(MB)'';Expression={[math]::Round($_WorkingSet/1MB,2)}} | Format-Table -AutoSize\")",
+      "Bash(tasklist:*)",
+      "Bash(systeminfo:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 20 | Format-Table ProcessName, @{Label=''Memory(MB)''; Expression={[math]::Round($_WorkingSet/1MB,2)}} -AutoSize\")",
+      "Bash(powershell:*)",
+      "Bash(cmd.exe /c \"cd /d C:\\Users\\15363\\Desktop\\game_1 && powershell -Command \"\"Start-Process ''disable_services.bat'' -Verb RunAs\"\"\")",
+      "Bash(sc query:*)",
+      "Bash(cmd /c \"powershell -Command \"\"Get-Service | Where-Object {$_Name -like ''*xtu*'' -or $_DisplayName -like ''*xtu*'' -or $_Name -like ''*intel*''} | Format-Table Name, DisplayName, Status -AutoSize\"\"\")",
+      "Bash(net start)",
+      "Bash(cmd /c \"cd /d C:\\Users\\15363\\Desktop\\game_1 && powershell -Command \"\"Start-Process ''永久删除XTU服务.bat'' -Verb RunAs\"\"\")",
+      "Read(//c/**)",
+      "Bash(cmd /c \"tasklist | findstr /i xtu\")",
+      "Bash(cmd /c \"sc query | findstr /i xtu\")",
+      "Bash(taskkill:*)",
+      "Bash(cmd /c \"taskkill /F /PID 26728\")",
+      "Bash(cmd /c \"taskkill /F /PID 28256\")",
+      "Bash(cmd /c:*)",
+      "Bash(sc qc:*)",
+      "Bash(sc stop:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
